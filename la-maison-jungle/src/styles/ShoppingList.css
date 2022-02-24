@@ -1,0 +1,22 @@
+.mpj-plant-list{
+    margin: 20px 12%;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.mpj-plant-item{
+    padding: 20px;
+    border: 1px solid #31b572;
+}
+
+.mpj-sale{
+    display: inline-block;
+    color: white;
+    background-color: maroon;
+    margin-left: 10px;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 0px 3px 2px
+}
