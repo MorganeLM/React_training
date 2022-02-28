@@ -13,6 +13,7 @@ function Cart() {
 				<li>Fleurs : {flowerPrice}€</li>
 			</ul>
 			Total : {monsteraPrice + ivyPrice + flowerPrice}€
+			
 		</div>
 	)
 }

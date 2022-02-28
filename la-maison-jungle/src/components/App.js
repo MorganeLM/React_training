@@ -1,13 +1,11 @@
 import Banner from './Banner'
-import Cart from './Cart'
-import ShoppingList from './ShoppingList'
+import Main from './Main'
 
 
 function App() {
     return <div>
       <Banner />
-      <Cart />
-      <ShoppingList />
+      <Main />
     </div>
 }
 
