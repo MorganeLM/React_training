@@ -1,10 +1,10 @@
 import CareScale from "./CareScale"
 
 function PlantItem(props) {
-    const {id,name, cover,light, water, isBestSale, isSpecialOffer} = props;
+    const {name, cover,light, water, isBestSale, isSpecialOffer} = props;
 
     return (
-        <li key={id} className='mpj-plant-item'>
+        <li className='mpj-plant-item'>
             <h3>{name}</h3>
                         <div className="mpj-plant-list-photo-wrapper">
                             <img src={cover} alt={name} className="mpj-plant-list-photo" />

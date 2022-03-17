@@ -1,0 +1,20 @@
+.lmj-footer {
+	color: black;
+	border-top: solid 3px black;
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: column;
+	align-items: center;
+	font-weight: 500;
+	padding: 20px 0;
+}
+
+.lmj-footer-elem {
+	margin-bottom: 10px;
+}
+
+.arobaseError{
+	color: darkred;
+	font-style: italic;
+	font-size: 0.9em;
+}
