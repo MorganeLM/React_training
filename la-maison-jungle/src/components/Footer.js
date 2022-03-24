@@ -4,17 +4,19 @@ import '../styles/Footer.css'
 function Footer() {
     const [inputValue, setInputValue] = useState('');
     const isArobaseError = inputValue.length > 0 ? !inputValue.includes('@') : false
-    const isArobaseThere = (value) => {
-        if(!value.includes('@')){
-            alert('Votre adresse e-mail est invalide !')
-        }
-    }
-    // const isArobaseThere = () => {
-    //     if(isArobaseError){
-    //         alert('Votre adresse e-mail est incomplète !')
+
+    // const isArobaseThere = (e) => {
+    //     if(!e.target.value.includes('@')){
+    //         alert('Votre adresse e-mail est invalide !')
     //     }
     // }
-    const checkInputValue = (value) => setInputValue(value)
+
+    const isArobaseThere = () => {
+        if(isArobaseError){
+            alert('Votre adresse e-mail est incomplète !')
+        }
+    }
+    const checkInputValue = (e) => setInputValue(e.target.value)
 
 	return (
 		<footer className='lmj-footer'>
@@ -24,9 +26,9 @@ function Footer() {
 			<div className='lmj-footer-elem'>Laissez-nous votre mail :</div>
             <input
                 value={inputValue}
-                onChange={(e) => checkInputValue(e.target.value)}
+                onChange={checkInputValue}
                 placeholder="adresse@email.fr"
-                onBlur={(e) => isArobaseThere(e.target.value)}
+                onBlur={isArobaseThere}
             />
             {isArobaseError && <span className='arobaseError'>Adresse non valide</span>}
 		</footer>
