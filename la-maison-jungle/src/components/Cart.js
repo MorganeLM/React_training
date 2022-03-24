@@ -1,5 +1,5 @@
 import '../styles/Cart.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function Cart({cart, updateCart}) {
     const [isOpen, setIsOpen] = useState(true)
@@ -20,6 +20,12 @@ function Cart({cart, updateCart}) {
 			])
 		}
 	}
+
+	//alert('hello') -> 2 alertes à chaque render -> why ?
+
+	useEffect(() => {
+		document.title = `MPJ: ${total}€ d'achats`
+	}, [total])
 
 	function removeFromCart(name, price){
 		const currentPlantRemoved = cart.find((plant) => plant.name === name);
