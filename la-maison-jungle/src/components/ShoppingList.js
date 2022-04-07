@@ -1,6 +1,7 @@
 import { plantList } from "../data/plantList"
 import '../styles/ShoppingList.css'
-import CategoriesCor from "./CategoriesCor"
+//import CategoriesCor from "./CategoriesCor"
+import Categories from "./Categories"
 import PlantItem from "./PlantItem"
 import { useState } from 'react'
 
@@ -8,12 +9,14 @@ import { useState } from 'react'
 
 function ShoppingList({ cart, updateCart }) {
 	//correction 
-	const [activeCategory, setActiveCategory] = useState('')
-	const categories = plantList.reduce(
-		(acc, plant) =>
-			acc.includes(plant.category) ? acc : acc.concat(plant.category),
-		[]
-	)
+	//const [activeCategory, setActiveCategory] = useState('')
+	const [selection, updateSelection] = useState([])
+
+	// const categories = plantList.reduce(
+	// 	(acc, plant) =>
+	// 		acc.includes(plant.category) ? acc : acc.concat(plant.category),
+	// 	[]
+	// )
 
 	function addToCart(name, price){
 		const currentPlantAdded = cart.find((plant) => plant.name === name);
@@ -31,33 +34,75 @@ function ShoppingList({ cart, updateCart }) {
 		}
 	}
 
-	// const [selection, updateSelection] = useState([])
+	const categories = plantList.reduce((acc, plant) => acc.includes(plant.category) ? acc : acc.concat(plant.category), [])
+    let dynamicCategories = categories.map(cat => {
+        let isSelected = false
+        if(selection.findIndex(element => element.name === cat) !== -1){
+            isSelected = true
+        }
+        return {
+            name: cat,
+            isSelected: isSelected
+        }
+    })
 
-    // function addCategoryToSelection(cat){
-    //     let isAlreadySelected = selection.find(item => item === cat);
-    //     if(isAlreadySelected){
-    //         let selectionMinusCat =  selection.filter(function(item) {
-    //             return item !== cat
-    //         })
-    //         updateSelection([...selectionMinusCat])
-    //     }else{
-    //         updateSelection([...selection, cat])
-    //     }
-    // }
+	function returnSelectedPlant(categories, plantList){
+		let dynamicPlantList = [];
+		let dynamicCategories = categories.filter(cat => cat.isSelected)
+		if(dynamicCategories.length > 0){
+			dynamicCategories.forEach(category => {
+				let plants = plantList.filter(plant => plant.category === category.name);
+				let selectedPlants = plants.map(plant => {
+					return {
+									...plant,
+									isSelected: true
+								}
+				}
+					)
+				selectedPlants.forEach(plant => dynamicPlantList.push(plant))
+			});
+		}else{
+			let selectedPlants = plantList.map(plant => {
+				return {
+								...plant,
+								isSelected: true
+							}
+			})
+			selectedPlants.forEach(plant => dynamicPlantList.push(plant))
+		}
+		
+		return dynamicPlantList;
+	}
+
+
+	let dynamicPlantList = returnSelectedPlant(dynamicCategories, plantList)
+	
+
+    function addCategoryToSelection(cat){
+        let isAlreadySelected = selection.find(item => item.name === cat.name);
+        if(isAlreadySelected){
+            let selectionMinusCat =  selection.filter(function(item) {
+                return item.name !== cat.name
+            })
+            updateSelection([...selectionMinusCat])
+        }else{
+            updateSelection([...selection, cat])
+        }
+    }
 
 
 	return (
 		<div className="mpj-shopping-list">
-			{/* <Categories selection={selection}
-						addCategoryToSelection={addCategoryToSelection}/> */}
-
+			<Categories dynamicCategories={dynamicCategories}
+						addCategoryToSelection={addCategoryToSelection}/>
+{/* 
 			<CategoriesCor  categories={categories}
 							setActiveCategory={setActiveCategory}
-							activeCategory={activeCategory}/>
+							activeCategory={activeCategory}/> */}
 
 			<ul className='mpj-plant-list'>
-				{plantList.map((plant) => (!activeCategory || activeCategory === plant.category) && (
-					<li className='mpj-plant-item' key={plant.id}>
+				{dynamicPlantList.map((plant) => (
+					(plant.isSelected) && <li className='mpj-plant-item' key={plant.id}>
 						<PlantItem name={plant.name} 
 								   cover={plant.cover} 
 								   light={plant.light} 

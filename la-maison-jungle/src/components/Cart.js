@@ -21,7 +21,11 @@ function Cart({cart, updateCart}) {
 		}
 	}
 
-	//alert('hello') -> 2 alertes à chaque render -> why ?
+
+	// console.log('plop') 
+	// useEffect(() => {
+	// 	console.log('useEffect')
+	// }, [])
 
 	useEffect(() => {
 		document.title = `MPJ: ${total}€ d'achats`
